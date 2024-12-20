@@ -1,0 +1,18 @@
+[project]
+name = "nerf-playground"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.2.0",
+    "torch>=2.5.1",
+    "pillow>=11.0.0",
+    "matplotlib>=3.10.0",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter>=1.1.1",
+    "ruff>=0.8.4",
+]
