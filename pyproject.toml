@@ -1,5 +1,5 @@
 [project]
-name = "nerf-playground"
+name = "nerfpg"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -16,3 +16,7 @@ dev = [
     "jupyter>=1.1.1",
     "ruff>=0.8.4",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
