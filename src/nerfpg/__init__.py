@@ -1,5 +1,8 @@
+from typing import Callable
+
 from PIL import Image
 import torch as tch
+from torch import nn
 import numpy as np
 
 
@@ -30,13 +33,22 @@ def grid(shape: tuple[int, int], dev: tch.device) -> tch.Tensor:
     return x * y
 
 
-def encode_coord(coord: tch.Tensor, n_modes: int) -> tch.Tensor:
+def encode_coord(coord: tch.Tensor, n_modes: int, factor: float = 1.0) -> tch.Tensor:
     """
     Cosine coordinate encoding.
     + `coord` shape: (N, C)
     + Returned tensor shape: (N, C * n_modes)
     """
-    freqs = tch.arange(1, n_modes + 1, device=coord.device) * np.pi
+    freqs = tch.arange(1, n_modes + 1, device=coord.device) * np.pi * factor
 
     args = coord.unsqueeze(-1) * freqs.reshape((1, 1, -1))
     return args.cos().flatten(1, 2)
+
+
+class Lambda(nn.Module):
+    def __init__(self, func: Callable[[tch.Tensor], tch.Tensor]):
+        super().__init__()
+        self.func = func
+
+    def forward(self, x: tch.Tensor) -> tch.Tensor:
+        return self.func(x)
